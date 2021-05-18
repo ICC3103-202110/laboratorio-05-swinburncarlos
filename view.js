@@ -1,5 +1,9 @@
 const figlet = require('figlet')
 const chalk = require('chalk')
+const inquirer = require('inquirer')
+const {model} = require ('./model')
+const prompt = require('prompt-sync')({sigint: true})
+const {printTable} = require('./model')
 
 function getTitle(){
     return chalk.yellow(
@@ -16,7 +20,7 @@ function getTitle(){
 function getTable(model){
     const {BillAmount} = model
     return [
-        {'Bill Amount': BillAmount, 'Tip %': 'tip percantage', 'Tip': 'tip', 'Total': 'total amount'},
+        {'Bill Amount': model.BillAmount, 'Tip %': model.TipPercentage, 'Tip': model.tipValue, 'Total': model.total}
     ]
 }
 
@@ -28,8 +32,24 @@ function view(model){
     }
 }
 
+function inputForm(model){
+    //const {input} = model
+    return inquirer.prompt([
+        { name: 'BillAmount', type: 'input', message: 'Enter the bill amount?', default: model.BillAmount },
+        { name: 'TipPercentage', type: 'input', message: 'Enter the tip percentage', default: model.TipPercentage }
+    ])
+}
+
+// Get actual console view
+function view(model){
+    return {
+        title: getTitle(),
+        table: getTable(model)
+    }
+}
 
 module.exports = {
     view,
-    getTitle
+    inputForm
+    //getTitle
 }

@@ -1,6 +1,10 @@
+//initiation model for the app
 initModel = {
-    counter: 0,
-    input: 'integer',
+    BillAmount: 0,
+    TipPercentage: 0,
+    Tip: 0,
+    Total: 0
+
 }
 
 module.exports = {
